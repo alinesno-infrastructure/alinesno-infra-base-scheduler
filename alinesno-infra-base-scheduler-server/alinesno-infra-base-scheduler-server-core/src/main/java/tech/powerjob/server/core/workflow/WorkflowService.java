@@ -28,7 +28,7 @@ import tech.powerjob.server.persistence.remote.repository.WorkflowNodeInfoReposi
 import tech.powerjob.server.remote.server.redirector.DesignateServer;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.*;
 
 /**

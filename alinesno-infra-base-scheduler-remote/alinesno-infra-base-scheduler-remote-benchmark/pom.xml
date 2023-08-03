@@ -14,10 +14,11 @@
     <properties>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
 
         <logback.version>1.2.9</logback.version>
-        <springboot.version>2.7.4</springboot.version>
-        
+        <springboot.version>3.1.2</springboot.version>
+
         <gatling.version>3.9.0</gatling.version>
         <gatling-maven-plugin.version>4.2.9</gatling-maven-plugin.version>
     </properties>
@@ -98,6 +99,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>

@@ -12,8 +12,9 @@
     <artifactId>alinesno-infra-base-scheduler-worker-samples</artifactId>
 
     <properties>
-        <springboot.version>2.7.4</springboot.version>
+        <springboot.version>3.1.2</springboot.version>
         <fastjson.version>1.2.83</fastjson.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
 
         <!-- 部署时跳过该module -->
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -86,6 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>

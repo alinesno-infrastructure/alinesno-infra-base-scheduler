@@ -24,7 +24,7 @@
     </modules>
 
     <properties>
-        <springboot.version>2.7.4</springboot.version>
+        <springboot.version>3.1.2</springboot.version>
 
         <!-- MySQL version that corresponds to spring-boot-dependencies version. -->
         <mysql.version>8.0.30</mysql.version>
@@ -46,6 +46,7 @@
 
         <groovy.version>3.0.10</groovy.version>
         <cron-utils.version>9.1.6</cron-utils.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
 
         <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
     </properties>
@@ -287,6 +288,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin.version}</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
