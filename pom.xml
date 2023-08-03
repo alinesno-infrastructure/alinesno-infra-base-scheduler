@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.alinesno.cloud.scheduler</groupId>
+    <artifactId>alinesno-infra-base-scheduler-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <modules>
+
+        <module>alinesno-infra-base-scheduler-common</module>
+        <module>alinesno-infra-base-scheduler-remote</module>
+        <module>alinesno-infra-base-scheduler-worker</module>
+        <module>alinesno-infra-base-scheduler-server</module>
+        <module>alinesno-infra-base-scheduler-client</module>
+        <module>alinesno-infra-base-scheduler-worker-agent</module>
+        <module>alinesno-infra-base-scheduler-worker-spring-boot-starter</module>
+        <module>alinesno-infra-base-scheduler-worker-samples</module>
+        <module>alinesno-infra-base-scheduler-official-processors</module>
+
+    </modules>
+
+    <properties>
+		<!-- 自定义版本 -->
+		<alinesno.infra.version>1.0.0-SNAPSHOT</alinesno.infra.version>
+		<alinesno.scheduler.version>1.0.0-SNAPSHOT</alinesno.scheduler.version>
+
+        <java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+
+		<skipTests>true</skipTests>
+		<springboot.version>3.1.2</springboot.version>
+
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<lombok.version>1.18.22</lombok.version>
+
+		<!-- docker registry -->
+		<docker.repository>registry.cn-shenzhen.aliyuncs.com</docker.repository>
+		<docker.public.repostory>registry.cn-shenzhen.aliyuncs.com</docker.public.repostory>
+		<docker.registry.name>alinesno-infra-incubator</docker.registry.name>
+		<docker.base.images>registry.cn-shenzhen.aliyuncs.com/alinesno-infra-base/openjdk:11.0.16-jdk-slim</docker.base.images>
+		<docker.user>root</docker.user>
+
+		<docker.maven.plugin.version>0.4.13</docker.maven.plugin.version>
+		<jib.maven.plugin.version>3.3.0</jib.maven.plugin.version>
+		<flatten.maven.plugin.version>1.1.0</flatten.maven.plugin.version>
+		<maven.source.plugin.version>3.0.1</maven.source.plugin.version>
+
+    </properties>
+
+    <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+		<plugins>
+			<!-- google docker打包插件
+				mvn compile jib:build
+				mvn compile jib:dockerBuild
+				mvn compile jib:buildTar
+			-->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib.maven.plugin.version}</version>
+				<configuration>
+					<from>
+						<image>${docker.base.images}</image>
+					</from>
+					<to>
+						<image>${docker.repository}/${docker.registry.name}/${project.artifactId}:${project.version}
+						</image>
+						<tags>
+							<tag>${project.version}</tag>
+							<tag>latest</tag>
+						</tags>
+						<auth>
+							<!--在docker-hub或者阿里云上的账号和密码 -->
+							<username>${env.REGISTRY_USERNAME}</username>
+							<password>${env.REGISTRY_PASSWORD}</password>
+						</auth>
+					</to>
+					<container>
+						<appRoot>/home/${docker.user}</appRoot>
+						<workingDirectory>/home/${docker.user}</workingDirectory>
+						<user>${docker.user}</user>
+						<!--使用当前时间 -->
+						<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+						<jvmFlags>
+							<jvmFlag>-Dfile.encoding=UTF-8</jvmFlag>
+
+							<!-- 调整成 -e JAVA_TOOL_OPTIONS="-Xms1G -Xmx1G -Dspring.profiles.active=prod"
+								传递参数,以适应多种环境
+								<jvmFlag>-Xms128m</jvmFlag>
+								<jvmFlag>-Xmx512m</jvmFlag>
+								<jvmFlag>-Dspring.profiles.active=hub</jvmFlag>
+								<jvmFlag>-XX:+UseParNewGC</jvmFlag>
+								<jvmFlag>-XX:+UseConcMarkSweepGC</jvmFlag>
+							-->
+							<jvmFlag>-XX:+DisableExplicitGC</jvmFlag>
+							<jvmFlag>-Xdebug</jvmFlag>
+							<jvmFlag>-Duser.timezone=GMT+08</jvmFlag>
+							<jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+
+						</jvmFlags>
+						<environment>
+							<TZ>Asia/Shanghai</TZ>
+						</environment>
+						<!-- <useCurrentTimestamp>true</useCurrentTimestamp> -->
+					</container>
+					<allowInsecureRegistries>true</allowInsecureRegistries>
+				</configuration>
+			</plugin>
+
+			<!-- Maven compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<testSource>${java.version}</testSource>
+					<testTarget>${java.version}</testTarget>
+				</configuration>
+			</plugin>
+			<!-- Edit MANIFEST.MF -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Implementation-Title>${project.artifactId}</Implementation-Title>
+							<Implementation-Version>${project.version}</Implementation-Version>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+            <url>http://repo.infra.linesno.com/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+            <url>http://repo.infra.linesno.com/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+</project>
