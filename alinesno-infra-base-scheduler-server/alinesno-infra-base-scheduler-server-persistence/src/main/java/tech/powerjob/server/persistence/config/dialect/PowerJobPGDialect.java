@@ -1,8 +1,8 @@
 package tech.powerjob.server.persistence.config.dialect;
 
 import org.hibernate.dialect.PostgreSQL10Dialect;
-import org.hibernate.type.descriptor.sql.LongVarcharTypeDescriptor;
-import org.hibernate.type.descriptor.sql.SqlTypeDescriptor;
+//import org.hibernate.type.descriptor.sql.LongVarcharTypeDescriptor;
+//import org.hibernate.type.descriptor.sql.SqlTypeDescriptor;
 
 import java.sql.Types;
 
@@ -26,8 +26,8 @@ public class PowerJobPGDialect extends PostgreSQL10Dialect {
      *
      * 更多内容请关注该 issues：https://github.com/PowerJob/PowerJob/issues/153
      */
-    @Override
-    public SqlTypeDescriptor getSqlTypeDescriptorOverride(int sqlCode) {
-        return Types.CLOB == sqlCode ? LongVarcharTypeDescriptor.INSTANCE : null;
-    }
+//    @Override
+//    public SqlTypeDescriptor getSqlTypeDescriptorOverride(int sqlCode) {
+//        return Types.CLOB == sqlCode ? LongVarcharTypeDescriptor.INSTANCE : null;
+//    }
 }

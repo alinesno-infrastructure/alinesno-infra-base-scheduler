@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Date;
 import java.util.function.Consumer;
 

@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.io.*;
 import java.util.List;
 import java.util.Map;

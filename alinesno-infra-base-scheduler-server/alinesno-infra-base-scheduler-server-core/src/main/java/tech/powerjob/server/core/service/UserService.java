@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;

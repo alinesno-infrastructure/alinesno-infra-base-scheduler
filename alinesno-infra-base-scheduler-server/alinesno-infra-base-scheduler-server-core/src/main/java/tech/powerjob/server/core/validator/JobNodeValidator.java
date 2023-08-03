@@ -11,7 +11,7 @@ import tech.powerjob.server.persistence.remote.model.JobInfoDO;
 import tech.powerjob.server.persistence.remote.model.WorkflowNodeInfoDO;
 import tech.powerjob.server.persistence.remote.repository.JobInfoRepository;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * @author Echo009
