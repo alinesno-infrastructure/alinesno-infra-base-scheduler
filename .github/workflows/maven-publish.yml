@@ -15,7 +15,7 @@ jobs:
 
     env:
       # 版本管理
-      PROJECT_NAME: 'alinesno-infra-base-scheduler-server-starter/alinesno-infra-base-scheduler-server-starter'
+      PROJECT_NAME: 'alinesno-infra-base-scheduler-server/alinesno-infra-base-scheduler-server-starter'
       PRO_VERSION: '1.0.0-SNAPSHOT'
       BUILD_NUMBER: ${{ github.run_number }}
 
