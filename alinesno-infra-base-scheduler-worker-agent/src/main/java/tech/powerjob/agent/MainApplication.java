@@ -43,10 +43,10 @@ public class MainApplication implements Runnable {
     @Option(names = {"-t", "--tag"}, description = "worker-agent's tag")
     private String tag;
 
-    public static void main(String[] args) {
-        CommandLine commandLine = new CommandLine(new MainApplication());
-        commandLine.execute(args);
-    }
+//    public static void main(String[] args) {
+//        CommandLine commandLine = new CommandLine(new MainApplication());
+//        commandLine.execute(args);
+//    }
 
     @Override
     public void run() {
