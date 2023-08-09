@@ -141,7 +141,7 @@ jobs:
           echo '</settings>' >> nexus-config.xml
 
       - name: Build and Deploy to Nexus
-        run: mvn clean deploy --settings nexus-config.xml
+        run: mvn clean package --settings nexus-config.xml
 
       - name: Deploy to AliyunCR
         run: |
